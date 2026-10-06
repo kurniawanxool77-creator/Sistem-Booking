@@ -20,6 +20,7 @@ interface User {
 interface CartItem {
   id: string;
   addedAt: number;
+  qty?: number;
 }
 
 interface ShopState {
@@ -30,6 +31,7 @@ interface ShopState {
   
   addToCart: (productId: string) => void;
   removeFromCart: (productId: string) => void;
+  updateCartQty: (productId: string, qty: number) => void;
   loginUser: (user: User) => void;
   logoutUser: () => void;
   setItems: (items: Product[]) => void;
@@ -79,9 +81,12 @@ export const useShopStore = create<ShopState>()(
       addToCart: (productId) => set((state) => ({ 
         cart: [...state.cart, { id: productId, addedAt: Date.now() }] 
       })),
-      
       removeFromCart: (productId) => set((state) => ({ 
         cart: state.cart.filter(c => c.id !== productId) 
+      })),
+      
+      updateCartQty: (productId, qty) => set((state) => ({
+        cart: state.cart.map(c => c.id === productId ? { ...c, qty } : c)
       })),
       
       loginUser: (user) => set({ user, isGuest: false }),

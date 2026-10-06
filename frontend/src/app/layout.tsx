@@ -20,8 +20,6 @@ export default function RootLayout({
       </head>
       <body>
         {children}
-        {/* We keep app.js temporarily for the CSS and non-React features */}
-        <Script src="/app.js" strategy="lazyOnload" />
       </body>
     </html>
   );

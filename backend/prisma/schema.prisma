@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ==================== USERS ====================
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  email     String?  @unique
+  password  String
+  nama      String?
+  wa        String?
+  kota      String?
+  alamat    String?
+  role      String   @default("CUSTOMER")
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  orders    Order[]
+  cart      Cart[]
+  sessions  Session[]
+
+  @@map("users")
+}
+
+// ==================== SESSIONS ====================
+model Session {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@map("sessions")
+}
+
+// ==================== PRODUCTS ====================
+model Product {
+  id        String        @id @default(cuid())
+  code      String        @unique
+  name      String
+  cat       String        // kategori: kmj, pnt, jkt, cur
+  brand     String
+  size      String?
+  warna     String?
+  price     Int
+  priceOld  Int?
+  status    String        @default("AVAILABLE")
+  seq       Int           @default(0)
+  soldAt    DateTime?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  // Relations
+  cartItems Cart[]
+  orderItems OrderItem[]
+
+  @@map("products")
+}
+
+// ==================== CART ====================
+model Cart {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  qty       Int      @default(1)
+  addedAt   DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@map("carts")
+}
+
+// ==================== ORDERS ====================
+model Order {
+  id         String      @id @default(cuid())
+  orderCode  String      @unique @default(cuid())
+  userId     String
+  user       User        @relation(fields: [userId], references: [id])
+  status     String      @default("PENDING")
+  total      Int
+  nama       String
+  wa         String
+  kota       String
+  alamat     String
+  catatan    String?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  items OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  qty       Int
+  price     Int
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}

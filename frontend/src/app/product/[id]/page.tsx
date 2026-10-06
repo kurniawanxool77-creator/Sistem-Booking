@@ -22,12 +22,19 @@ export default function ProductDetailPage() {
   }, [params.id, items]);
 
   const handleAddToCart = () => {
-    if (!user) {
-      router.push('/login');
-      return;
-    }
     if (product) {
       addToCart(product.id);
+      alert('Produk berhasil ditambahkan ke keranjang!');
+    }
+  };
+
+  const handleBuyNow = () => {
+    if (product) {
+      addToCart(product.id);
+    }
+    if (!user) {
+      router.push('/login');
+    } else {
       router.push('/cart');
     }
   };
@@ -130,7 +137,7 @@ export default function ProductDetailPage() {
               </div>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <button className="btn" disabled={isSold || isLocked}>
+                <button className="btn" disabled={isSold || isLocked} onClick={handleBuyNow}>
                   {isSold ? 'Sudah terjual' : isLocked ? 'Sedang di-hold orang lain' : 'Beli sekarang'}
                 </button>
                 <button className="btn ghost" onClick={handleAddToCart} disabled={isSold}>

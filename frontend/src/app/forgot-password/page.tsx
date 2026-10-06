@@ -1,21 +1,9 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
+import Link from 'next/link';
 
-export default function AdminPage() {
-  const router = useRouter();
-  const [username, setUsername] = useState('superadmin');
-  const [password, setPassword] = useState('12345678');
-  
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (username === 'superadmin' && password === '12345678') {
-      router.push('/admin/dashboard');
-    } else {
-      alert('Username atau password salah');
-    }
-  };
+export default function ForgotPasswordPage() {
   useEffect(() => {
     // Canvas background logic ported from vanilla JS
     const cv = document.getElementById('lbg') as HTMLCanvasElement;
@@ -114,8 +102,8 @@ export default function AdminPage() {
 
   return (
     <div className="auth" style={{ minHeight: '100vh', display: 'flex' }}>
-      <div className="side" style={{ flex: 1, position: 'relative', background: '#D3C6B5', display: 'none' }}>
-        <img src="/images/landing_2.png" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+      <div className="side" style={{ flex: 1, position: 'relative', background: '#D3C6B5' }}>
+        <img src="/images/landing_2.jpeg" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         <img className="logo" src="/images/landing_0.png" alt="Fabiebsky" style={{ position: 'absolute', top: 32, left: 32, height: 40 }} />
       </div>
       
@@ -143,35 +131,26 @@ export default function AdminPage() {
         <div className="box" style={{ position: 'relative', zIndex: 10, width: '100%', maxWidth: 380, display: 'flex', flexDirection: 'column', gap: 32 }}>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6, textAlign: 'center' }}>
-            <h2 style={{ fontSize: 32, color: '#F4EFE7', fontFamily: "'Playfair Display', serif" }}>Superadmin Fabiebsky</h2>
-            <p style={{ color: '#C9B9A6', fontSize: 14 }}>Masuk sebagai administrator.</p>
+            <h2 style={{ fontSize: 32, color: '#F4EFE7', fontFamily: "'Playfair Display', serif" }}>Lupa Password</h2>
+            <p style={{ color: '#C9B9A6', fontSize: 14 }}>Masukkan email untuk reset password Anda.</p>
           </div>
           
-          <form id="authForm" className="card" noValidate onSubmit={handleLogin}>
-            <h2 style={{ fontSize: 24, margin: 0, fontFamily: "'Playfair Display', serif" }}>Masuk</h2>
+          <form id="authForm" className="card" noValidate>
             
             <div className="field" style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <label htmlFor="l-id" style={{ fontSize: 13, fontWeight: 700 }}>Username</label>
-              <input id="l-id" type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} autoComplete="username" style={{ padding: '12px 14px', borderRadius: 6, border: '1px solid #DCD2C4', background: '#FFFDF9', minHeight: 44, color: '#2A2119' }} />
+              <label htmlFor="f-email" style={{ fontSize: 13, fontWeight: 700 }}>Email Terdaftar</label>
+              <input id="f-email" type="email" placeholder="johndoe@email.com" style={{ padding: '12px 14px', borderRadius: 6, border: '1px solid #DCD2C4', background: '#FFFDF9', minHeight: 44, color: '#2A2119' }} />
             </div>
             
-            <div className="field" style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              <label htmlFor="l-pw" style={{ fontSize: 13, fontWeight: 700 }}>Password</label>
-              <input id="l-pw" type="password" placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)} autoComplete="current-password" style={{ padding: '12px 14px', borderRadius: 6, border: '1px solid #DCD2C4', background: '#FFFDF9', minHeight: 44, color: '#2A2119' }} />
-            </div>
+            <Link href="/login" style={{ width: '100%', marginTop: 8 }}>
+              <button type="button" className="btn acc" style={{ width: '100%', padding: '14px 24px', borderRadius: 6, background: '#B5563A', color: '#fff', border: 'none', fontWeight: 700, minHeight: 44 }}>Kirim Link Reset</button>
+            </Link>
             
-            <div className="alt">
-              <button type="button">Lupa password?</button>
-            </div>
-            
-            <button type="submit" className="btn acc" style={{ width: '100%', padding: '14px 24px', borderRadius: 6, background: '#B5563A', color: '#fff', border: 'none', fontWeight: 700, minHeight: 44 }}>Masuk</button>
-            
-            <div className="or">atau</div>
-            
-            <button type="button" onClick={() => router.push('/')} className="btn ghost" style={{ width: '100%', padding: '14px 24px', borderRadius: 6, background: 'transparent', border: '1px solid #2A2119', color: '#2A2119', fontWeight: 700, minHeight: 44 }}>Kembali ke Beranda</button>
-            
-            <div className="alt" style={{ justifyContent: 'center', marginTop: 8 }}>
-              Belum punya akun? <button type="button">Buat akun</button>
+            <div className="alt" style={{ justifyContent: 'center', marginTop: 16 }}>
+              Ingat password Anda? 
+              <Link href="/login">
+                <button type="button">Kembali ke Login</button>
+              </Link>
             </div>
           </form>
           
