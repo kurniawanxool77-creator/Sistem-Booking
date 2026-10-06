@@ -75,7 +75,7 @@ export default function DaftarProdukPage() {
           <h2 style={{ fontSize: '24px', fontFamily: 'var(--serif)', color: 'var(--ink)', margin: 0 }}>Daftar Produk</h2>
           <p style={{ color: 'var(--muted)', fontSize: '14px', marginTop: '4px', marginBottom: 0 }}>Kelola inventaris, varian, dan harga produk Anda.</p>
         </div>
-        <button onClick={() => { setShowModal(true); setFormVariants([{ size: '', stock: '', price: '' }]); }} style={{ padding: '8px 16px', background: 'var(--ink)', color: 'var(--cream)', borderRadius: '8px', border: 'none', fontWeight: 600, cursor: 'pointer' }}>+ Tambah Produk</button>
+        <button onClick={() => { setShowModal(true); setFormVariants([{ size: '', stock: '', price: '', image: '' }]); }} style={{ padding: '8px 16px', background: 'var(--ink)', color: 'var(--cream)', borderRadius: '8px', border: 'none', fontWeight: 600, cursor: 'pointer' }}>+ Tambah Produk</button>
       </div>
       
       <div style={{ display: 'flex', gap: '16px' }}>
